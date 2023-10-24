@@ -257,15 +257,18 @@ void DFS_listar_rutas(Grafo<string> grafo,int aeropuerto, int destino, string ae
             for (list<Arco>::iterator it = adyacentes.begin(); it != adyacentes.end(); ++it){
 
                 int adyacente = it->devolver_adyacente();
-                string aeropuerto_adyacente = relaciones.find(adyacente)->first;
-                //verifico si es la misma aerolinea y si hay asientos disponibles
-                if (info_rutas[aeropuerto_actual + "-" + aeropuerto_adyacente].aerolineas_asientos[aerolinea] > 0){
-                    //guardo la info del recorrido
-                    recorrido.kms += info_rutas[aeropuerto_actual + "-" + aeropuerto_adyacente].distancia;
-                    recorrido.cant_escalas++;
-                    //llamo a DFS para el adyacente
-                    DFS_listar_rutas(grafo,adyacente,destino,aerolinea,lista_rutas,info_rutas,visitados,recorrido,aeropuerto_destino,relaciones);
+                if (!visitados[adyacente]){    
+                        string aeropuerto_adyacente = relaciones.find(adyacente)->first;
+                        //verifico si es la misma aerolinea y si hay asientos disponibles
+                        if (info_rutas[aeropuerto_actual + "-" + aeropuerto_adyacente].aerolineas_asientos[aerolinea] > 0){
+                            //guardo la info del recorrido
+                            recorrido.kms += info_rutas[aeropuerto_actual + "-" + aeropuerto_adyacente].distancia;
+                            recorrido.cant_escalas++;
+                            //llamo a DFS para el adyacente
+                            DFS_listar_rutas(grafo,adyacente,destino,aerolinea,lista_rutas,info_rutas,visitados,recorrido,aeropuerto_destino,relaciones);
+                        }
                 }
+                
             }
         }
     }
