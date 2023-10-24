@@ -5,7 +5,7 @@
 #include <map>
 #include <list>
 #include "Grafo.h"
-#include "/Users/agustin/Downloads/intento tpe 2/include/Grafo.h"
+#include "/Users/Downloads/intento tpe 2/include/Grafo.h"
 using namespace std;
 
 //el grafo esta implementado como map<int, map<int,C> > grafo;
