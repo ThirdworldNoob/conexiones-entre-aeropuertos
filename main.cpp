@@ -5,10 +5,13 @@
 #include <map>
 #include <list>
 #include "Grafo.h"
-#include "/Users/Downloads/intento tpe 2/include/Grafo.h"
+#include "/Users/agustin/Downloads/intento tpe 2/include/Grafo.h"
 using namespace std;
 
-//el grafo esta implementado como map<int, map<int,C> > grafo;
+/*void cargar_aeropuertos(string path);
+void cargar_reservas(string path);
+void cargar_aeropuertos_rutas(string path);
+void cargar_rutas(string path);*/
 
 struct Ruta{
         string aeropuerto_origen;
@@ -207,7 +210,7 @@ void listar_aeropuertos(map<string,int>relaciones){
     }
 }
 
-//void listar_reservas(info_rutas); solo tengo q guardar las reservas en una estrucutura y mostrarlo?
+//void listar_reservas(info_rutas); que onda solo tengo q traer el archivo de reservas y mostrarlo? o tengo q hacer algo mas?
 
 
 void servicio_1(map<string,Ruta> info_rutas){
@@ -257,18 +260,17 @@ void DFS_listar_rutas(Grafo<string> grafo,int aeropuerto, int destino, string ae
             for (list<Arco>::iterator it = adyacentes.begin(); it != adyacentes.end(); ++it){
 
                 int adyacente = it->devolver_adyacente();
-                if (!visitados[adyacente]){    
-                        string aeropuerto_adyacente = relaciones.find(adyacente)->first;
-                        //verifico si es la misma aerolinea y si hay asientos disponibles
-                        if (info_rutas[aeropuerto_actual + "-" + aeropuerto_adyacente].aerolineas_asientos[aerolinea] > 0){
-                            //guardo la info del recorrido
-                            recorrido.kms += info_rutas[aeropuerto_actual + "-" + aeropuerto_adyacente].distancia;
-                            recorrido.cant_escalas++;
-                            //llamo a DFS para el adyacente
-                            DFS_listar_rutas(grafo,adyacente,destino,aerolinea,lista_rutas,info_rutas,visitados,recorrido,aeropuerto_destino,relaciones);
-                        }
+                if (!visitados[adyacente]){
+                    string aeropuerto_adyacente = relaciones.find(adyacente)->first;
+                    //verifico si es la misma aerolinea y si hay asientos disponibles
+                    if (info_rutas[aeropuerto_actual + "-" + aeropuerto_adyacente].aerolineas_asientos[aerolinea] > 0){
+                    //guardo la info del recorrido
+                    recorrido.kms += info_rutas[aeropuerto_actual + "-" + aeropuerto_adyacente].distancia;
+                    recorrido.cant_escalas++;
+                    //llamo a DFS para el adyacente
+                    DFS_listar_rutas(grafo,adyacente,destino,aerolinea,lista_rutas,info_rutas,visitados,recorrido,aeropuerto_destino,relaciones);
+                    }
                 }
-                
             }
         }
     }
@@ -289,8 +291,8 @@ void encontrar_aerolineas(string aeropuerto_origen,list<Arco> adyacentes_origen,
     }
 }
 
-void servicio_2(Grafo<string> grafo, map<string,int>relaciones, map<string,Ruta>info_rutas){  
- 
+void servicio_2(Grafo<string> grafo, map<string,int>relaciones, map<string,Ruta>info_rutas){
+
     cout<< "servicio 2: obtener todos los vuelos directos y con escalas entre dos aeropuertos para un par de aeropuertos usando siempre la misma aerlinea" << endl;
     string aeropuerto_origen;
     string aeropuerto_destino;
@@ -301,11 +303,11 @@ void servicio_2(Grafo<string> grafo, map<string,int>relaciones, map<string,Ruta>
     int origen = relaciones[aeropuerto_origen];
     int destino = relaciones[aeropuerto_destino];
 
-    //luego de verificar q este todo ok voy a estructurar mejor la funcion creando otra funciona mas para hacer todo esto
     list<Arco> adyacentes_origen; // no se porq no me toma la clase Arco
     grafo.devolver_adyacentes(origen,adyacentes_origen);
     vector<string> aerolineas;
     encontrar_aerolineas(aeropuerto_origen,adyacentes_origen,aerolineas,relaciones,info_rutas); //encuentro las aerolineas que conectan con los adyacentes a origen y los cargo en aerolineas
+    
     
     int cantnodos = grafo.devolver_longitud();
     bool visitados[cantnodos]; // lo inicializo en falso
