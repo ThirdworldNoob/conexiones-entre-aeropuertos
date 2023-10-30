@@ -9,11 +9,22 @@ vector<int> vecino_mas_cercano(int vertice, Grafo<string> grafo, bool visitados[
     int aeropuerto_mas_cercano= -1;
 
     //itero sobre los adyacentes del vertice 
-    for(auto it = grafo[vertice].begin(); it != grafo[vertice].end(); it++){
+    /*for(auto it = grafo[vertice].begin(); it != grafo[vertice].end(); it++){
       if (!visitados[it->first] && grafo[vertice][it->first] < kms_aeropuerto_mas_cercano){
         kms_aeropuerto_mas_cercano = grafo[vertice][it->first];
         aeropuerto_mas_cercano = it->first;
       }
+    }*/
+    list<Arco> adyacentes;
+    grafo.devolver_adyacentes(vertice,adyacentes);
+    for (list<Arco>::iterator it = adyacentes.begin(); it != adyacentes.end(); ++it){
+
+        int adyacente = it->devolver_adyacente();
+        double distancia = atof(it->devolver_costo());
+        if (!visitados[adyacente] && distancia < kms_aeropuerto_mas_cercano){
+            kms_aeropuerto_mas_cercano = it->devolver_costo();
+            aeropuerto_mas_cercano = adyacente;
+        }
     }
     if (aeropuerto_mas_cercano != -1){
         kms += kms_aeropuerto_mas_cercano;
